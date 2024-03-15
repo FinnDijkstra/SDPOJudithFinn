@@ -34,7 +34,15 @@ def lp_sample(n, theta, d, npoints, filename):
 
 
 def jacobi_(n,k,u):
-    return u
+    alpha = (n-3)
+    if k == 0:
+        return 1
+    if k == 1:
+        return u
+    leftP = jacobi_(n,k-1,u)
+    rightP = jacobi_(n,k-2,u)
+    P = (2*k+alpha-1)/(k+alpha)*u*leftP -(k-1)/(k+alpha)*rightP
+    return P
 
 
 
@@ -93,7 +101,7 @@ def main():
     # Let's try our program with 4.0*x^4 + 2.0*x^3 - 3.0*x^2 + 2.0.  This should
     # give an SDP with optimal solution 0.688022543737423, which is really the
     # minimum of the polynomial!
-    lp_sample(1, math.pi/3.0, 5, 10, "test_1.sdpa")
+    lp_sample(8, math.pi/3.0, 10, 100, "test_1.sdpa")
 
 main()
 
