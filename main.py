@@ -55,6 +55,7 @@ def main():
     # minimum of the polynomial!
     p = [2, 0, -3, 2, 4]
     polymin_sdpa("foo.sdpa", p)
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    main()
 
-
-main()
