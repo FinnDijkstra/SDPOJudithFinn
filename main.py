@@ -1,7 +1,7 @@
 import math
 def lp_sample(n, theta, d, npoints, filename):
-    # S = [-1 + math.cos(i * (theta- math.pi)/(npoints-1) for i in range(npoints)]
-    S = [math.cos(math.pi + i/(npoints-1) * (-math.pi +theta)) for i in range(npoints)]
+    S = [-1 + i*(math.cos( theta )+1)/(npoints-1) for i in range(npoints)]
+    #S = [math.cos(math.pi + i/(npoints-1) * (-math.pi +theta)) for i in range(npoints)]
 
     with open(filename, "w") as out:
         #number of constraints
@@ -26,14 +26,6 @@ def lp_sample(n, theta, d, npoints, filename):
         for j in range(1, d+2):
             out.write("0 1 %d %d -1.0\n" %(j,j))
 
-
-
-
-
-
-
-
-
 def jacobi_(n,k,u):
     alpha = (n-3)
     if k == 0:
@@ -51,10 +43,8 @@ def jacobi_List(n,k,u):
     for i2 in range(2,k+1):
         alpha = (n - 3)
         leftP = Plist[i2-1]
-        print(leftP)
         rightP = Plist[i2-2]
-        print(rightP)
-        P = (2 * k + alpha - 1) / (k + alpha) * u * Plist[i2-1] - (k - 1) / (k + alpha) * Plist[i2-2]
+        P = (2*i2+alpha-1)/(i2+alpha)*u*leftP -(i2-1)/(i2+alpha)*rightP
         Plist.append(P)
     return Plist
 
@@ -114,9 +104,9 @@ def main():
     # Let's try our program with 4.0*x^4 + 2.0*x^3 - 3.0*x^2 + 2.0.  This should
     # give an SDP with optimal solution 0.688022543737423, which is really the
     # minimum of the polynomial!
-    print(jacobi_List(8,10,1/2))
-    jacobi_(8,10,1/2)
-    lp_sample(8, math.pi/3.0, 30, 10, "test_1.sdpa")
+    # print(jacobi_List(8,10,1/2))
+    # jacobi_(8,10,1/2)
+    lp_sample(8, math.pi/3.0, 50, 100, "test_1.sdpa")
 
 main()
 
