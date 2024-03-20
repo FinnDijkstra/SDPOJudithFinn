@@ -69,7 +69,7 @@ def jacobi_coef(n,d):
 def lp_sos(n, theta, d, filename):
     with open(filename, "w") as out:
         #number of constraints
-        out.write("%d\n" % d+1)
+        out.write("%d\n" % (d+1))
 
         #number of blocks and sizes
         out.write("3\n")
@@ -86,8 +86,16 @@ def lp_sos(n, theta, d, filename):
                 out.write("%d 1 %d %d %f\n" % ((i + 1), (k + 1), (k + 1), C[k][i]))
             for j in range(d//2+1):
                 j2 = i-j
+                k = i-1-j
                 if j2>=0:
-                 out.write("%d 2 %d %d %f\n" % ((i + 1), (k + 1), (k + 1), C[k][i]))
+                    if j2 <= j:
+                        out.write("%d 2 %d %d %f\n" % ((i + 1), (j2 + 1), (j + 1),(1)))
+                        out.write("%d 3 %d %d %f\n" % ((i + 1), (j2 + 1), (j + 1), (math.cos(theta))))
+                if k >=0:
+                    if k<=j:
+                        out.write("%d 2 %d %d %f\n" % ((i + 1), (k + 1), (j + 1), 1))
+                        out.write("%d 3 %d %d %f\n" % ((i + 1), (k + 1), (j + 1), -1))
+
 
         #objective function
         for j in range(1, d+2):
@@ -102,9 +110,9 @@ def main():
     # print(jacobi_List(8,10,1/2))
     # jacobi_(8,10,1/2)
     #lp_sample(8, math.pi/3.0, 200, 500, "test_1.sdpa")
-    l = jacobi_coef(7,5)
-    print(l)
-
+    #l = jacobi_coef(7,5)
+    #print(l)
+    lp_sos(8,math.pi/3.0, 9,"test_sos.sdpa")
 main()
 
 
