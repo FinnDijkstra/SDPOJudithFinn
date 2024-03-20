@@ -96,6 +96,20 @@ def lp_sos(n, theta, d, filename):
                         out.write("%d 2 %d %d %f\n" % ((i + 1), (k + 1), (j + 1), 1))
                         out.write("%d 3 %d %d %f\n" % ((i + 1), (k + 1), (j + 1), -1))
 
+        # for k in range(d + 1):
+        #     Plist = jacobi_List(n,d,-1)
+        #     out.write("%d 1 %d %d %f\n" % ((d + 2), (k + 1), (k + 1), ( Plist[k])))
+        # for j in range(d // 2 + 1):
+        #     for j2 in range(j, d//2 +1):
+        #         out.write("%d 3 %d %d %f\n" % ((d+2), (j2 + 1), (j + 1), ((-1**(j+j2)) *(math.cos(theta)+1))))
+        #
+        # for k in range(d + 1):
+        #     Plist = jacobi_List(n, d, math.cos(theta))
+        #     out.write("%d 1 %d %d %f\n" % ((d + 3), (k + 1), (k + 1), ( Plist[k])))
+        # for j in range(d // 2 + 1):
+        #     for j2 in range(j, d//2 +1):
+        #         out.write("%d 2 %d %d %f\n" % ((d+3), (j2 + 1), (j + 1), (((math.cos(theta))**(j+j2)) *(math.cos(theta)+1))))
+
 
         #objective function
         for j in range(1, d+2):
@@ -104,15 +118,12 @@ def lp_sos(n, theta, d, filename):
 
 
 def main():
-    # Let's try our program with 4.0*x^4 + 2.0*x^3 - 3.0*x^2 + 2.0.  This should
-    # give an SDP with optimal solution 0.688022543737423, which is really the
-    # minimum of the polynomial!
     # print(jacobi_List(8,10,1/2))
     # jacobi_(8,10,1/2)
-    #lp_sample(8, math.pi/3.0, 200, 500, "test_1.sdpa")
+    lp_sample(8, math.pi/3.0, 19, 1000, "test_1.sdpa")
     #l = jacobi_coef(7,5)
     #print(l)
-    lp_sos(8,math.pi/3.0, 9,"test_sos.sdpa")
+    lp_sos(8,math.pi/3.0, 19,"test_sos.sdpa")
 main()
 
 
