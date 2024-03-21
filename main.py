@@ -1,3 +1,4 @@
+##### Finn Dijkstra & Judith Capel #######
 import math
 def lp_sample(n, theta, d, npoints, filename):
     #S = [-1 + i*(math.cos( theta )+1)/(npoints-1) for i in range(npoints)]
@@ -19,24 +20,24 @@ def lp_sample(n, theta, d, npoints, filename):
             Plist = jacobi_List(n, d, S[i])
             for j in range(d+1):
                 P = Plist[j]
-                out.write("%d 1 %d %d %.12f\n"% ((i+1), (j+1), (j+1), P))
+                out.write("%d 1 %d %d %s\n"% ((i+1), (j+1), (j+1), P))
             out.write("%d 2 %d %d 1.0\n" % ((i+1), (i+1), (i+1)))
 
         #objective function
         for j in range(1, d+2):
             out.write("0 1 %d %d -1.0\n" %(j,j))
 
-def jacobi_(n,k,u):
-    alpha = (n-3)
-    if k == 0:
-        return 1
-    if k == 1:
-        return u
-    leftP = jacobi_(n,k-1,u)
-    rightP = jacobi_(n,k-2,u)
-    P = (2*k+alpha-1)/(k+alpha)*u*leftP -(k-1)/(k+alpha)*rightP
-    print(f"{P} at {k}")
-    return P
+# def jacobi_(n,k,u):
+#     alpha = (n-3)
+#     if k == 0:
+#         return 1
+#     if k == 1:
+#         return u
+#     leftP = jacobi_(n,k-1,u)
+#     rightP = jacobi_(n,k-2,u)
+#     P = (2*k+alpha-1)/(k+alpha)*u*leftP -(k-1)/(k+alpha)*rightP
+#     print(f"{P} at {k}")
+#     return P
 
 def jacobi_List(n,k,u):
     Plist = [1.0,u]
@@ -96,21 +97,6 @@ def lp_sos(n, theta, d, filename):
                         out.write("%d 2 %d %d %.12f\n" % ((i + 1), (k + 1), (j + 1), 1))
                         out.write("%d 3 %d %d %.12f\n" % ((i + 1), (k + 1), (j + 1), -1))
 
-        # for k in range(d + 1):
-        #     Plist = jacobi_List(n,d,-1)
-        #     out.write("%d 1 %d %d %f\n" % ((d + 2), (k + 1), (k + 1), ( Plist[k])))
-        # for j in range(d // 2 + 1):
-        #     for j2 in range(j, d//2 +1):
-        #         out.write("%d 3 %d %d %f\n" % ((d+2), (j2 + 1), (j + 1), ((-1**(j+j2)) *(math.cos(theta)+1))))
-        #
-        # for k in range(d + 1):
-        #     Plist = jacobi_List(n, d, math.cos(theta))
-        #     out.write("%d 1 %d %d %f\n" % ((d + 3), (k + 1), (k + 1), ( Plist[k])))
-        # for j in range(d // 2 + 1):
-        #     for j2 in range(j, d//2 +1):
-        #         out.write("%d 2 %d %d %f\n" % ((d+3), (j2 + 1), (j + 1), (((math.cos(theta))**(j+j2)) *(math.cos(theta)+1))))
-
-
         #objective function
         for j in range(1, d+2):
             out.write("0 1 %d %d -1.0\n" %(j,j))
@@ -118,11 +104,7 @@ def lp_sos(n, theta, d, filename):
 
 
 def main():
-    # print(jacobi_List(8,10,1/2))
-    # jacobi_(8,10,1/2)
     lp_sample(24, math.pi/3.0, 19, 1000, "test_1.sdpa")
-    #l = jacobi_coef(7,5)
-    #print(l)
     lp_sos(24,math.pi/3.0, 19,"test_sos.sdpa")
 main()
 
