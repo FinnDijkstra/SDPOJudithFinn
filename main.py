@@ -111,7 +111,7 @@ def lp_sos(n, theta, d, filename):
 
 
 def main():
-    lp_sample(24, math.pi/3.0, 19, 1500, "test_1.sdpa")
+    lp_sample(24, math.pi/3.0, 19, 500, "test_1.sdpa")
     lp_sos(24,math.pi/3.0, 19,"test_sos.sdpa")
 main()
 
