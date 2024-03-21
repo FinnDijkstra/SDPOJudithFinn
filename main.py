@@ -22,12 +22,6 @@ def lp_sample(n, theta, d, npoints, filename):
                 P = Plist[j]
                 out.write("%d 1 %d %d %s\n"% ((i+1), (j+1), (j+1), P))
             out.write("%d 2 %d %d 1.0\n" % ((i+1), (i+1), (i+1)))
-        # Pcoef = jacobi_coef(n, d)
-        # for i in range(npoints):
-        #     for j in range(d+1):
-        #         P = sum(Pcoef[j][k]*(S[i]**k) for k in range(d+1))
-        #         out.write("%d 1 %d %d %s\n"% ((i+1), (j+1), (j+1), P))
-        #     out.write("%d 2 %d %d 1.0\n" % ((i+1), (i+1), (i+1)))
 
         #objective function
         for j in range(1, d+2):
@@ -49,8 +43,8 @@ def jacobi_List(n,k,u):
     Plist = [1.0,u]
     for i2 in range(2,k+1):
         alpha = (n - 3)
-        leftP = Plist[i2-1]  #math.nextafter(Plist[i2-1], math.inf)
-        rightP = Plist[i2-2] #math.nextafter(Plist[i2-2], math.inf)
+        leftP = Plist[i2-1]
+        rightP = Plist[i2-2]
         P = ((2*i2+alpha-1)*u*leftP -(i2-1)*rightP)/(i2+alpha)
 
         Plist.append(P)
@@ -111,7 +105,7 @@ def lp_sos(n, theta, d, filename):
 
 
 def main():
-    lp_sample(24, math.pi/3.0, 19, 500, "test_1.sdpa")
+    lp_sample(24, math.pi/3.0, 13, 250, "test_1.sdpa")
     lp_sos(24,math.pi/3.0, 19,"test_sos.sdpa")
 main()
 
