@@ -19,7 +19,7 @@ def lp_sample(n, theta, d, npoints, filename):
             Plist = jacobi_List(n, d, S[i])
             for j in range(d+1):
                 P = Plist[j]
-                out.write("%d 1 %d %d %f\n"% ((i+1), (j+1), (j+1), P))
+                out.write("%d 1 %d %d %.12f\n"% ((i+1), (j+1), (j+1), P))
             out.write("%d 2 %d %d 1.0\n" % ((i+1), (i+1), (i+1)))
 
         #objective function
@@ -83,18 +83,18 @@ def lp_sos(n, theta, d, filename):
         C = jacobi_coef(n,d)
         for i in range(d+1):
             for k in range(d+1):
-                out.write("%d 1 %d %d %f\n" % ((i + 1), (k + 1), (k + 1), C[k][i]))
+                out.write("%d 1 %d %d %.12f\n" % ((i + 1), (k + 1), (k + 1), C[k][i]))
             for j in range(d//2+1):
                 j2 = i-j
                 k = i-1-j
                 if j2>=0:
                     if j2 <= j:
-                        out.write("%d 2 %d %d %f\n" % ((i + 1), (j2 + 1), (j + 1),(1)))
-                        out.write("%d 3 %d %d %f\n" % ((i + 1), (j2 + 1), (j + 1), (math.cos(theta))))
+                        out.write("%d 2 %d %d %.12f\n" % ((i + 1), (j2 + 1), (j + 1),(1)))
+                        out.write("%d 3 %d %d %.12f\n" % ((i + 1), (j2 + 1), (j + 1), (math.cos(theta))))
                 if k >=0:
                     if k<=j:
-                        out.write("%d 2 %d %d %f\n" % ((i + 1), (k + 1), (j + 1), 1))
-                        out.write("%d 3 %d %d %f\n" % ((i + 1), (k + 1), (j + 1), -1))
+                        out.write("%d 2 %d %d %.12f\n" % ((i + 1), (k + 1), (j + 1), 1))
+                        out.write("%d 3 %d %d %.12f\n" % ((i + 1), (k + 1), (j + 1), -1))
 
         # for k in range(d + 1):
         #     Plist = jacobi_List(n,d,-1)
@@ -120,10 +120,10 @@ def lp_sos(n, theta, d, filename):
 def main():
     # print(jacobi_List(8,10,1/2))
     # jacobi_(8,10,1/2)
-    lp_sample(8, math.pi/3.0, 19, 1000, "test_1.sdpa")
+    lp_sample(24, math.pi/3.0, 19, 1000, "test_1.sdpa")
     #l = jacobi_coef(7,5)
     #print(l)
-    lp_sos(8,math.pi/3.0, 19,"test_sos.sdpa")
+    lp_sos(24,math.pi/3.0, 19,"test_sos.sdpa")
 main()
 
 
